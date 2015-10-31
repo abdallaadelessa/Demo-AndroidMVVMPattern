@@ -27,7 +27,6 @@ public class MainViewModel extends BaseObservable {
     private Context context;
     // Listener
     private DataListener dataListener;
-    ;
 
     // ---------------------->
 
