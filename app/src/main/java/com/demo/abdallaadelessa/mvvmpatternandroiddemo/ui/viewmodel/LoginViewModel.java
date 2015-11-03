@@ -1,27 +1,27 @@
 package com.demo.abdallaadelessa.mvvmpatternandroiddemo.ui.viewmodel;
 
 import android.content.Context;
-import android.databinding.BaseObservable;
-import android.databinding.ObservableField;
+import android.databinding.BindingAdapter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
+import com.demo.abdallaadelessa.mvvmpatternandroiddemo.model.beans.BindableString;
 import com.demo.abdallaadelessa.mvvmpatternandroiddemo.model.beans.User;
 
 /**
  * Created by abdulla on 10/31/15.
  */
-public class LoginViewModel extends BaseObservable implements LoginEventHandler.ILoginEventHandler {
-
+public class LoginViewModel {
+    public static final int KEY = 1;
     private Context context;
     private User user;
-    private ObservableField<String> username;
-    private ObservableField<String> password;
 
     public LoginViewModel(Context context, User user) {
         this.context = context;
         this.user = user;
-        this.username = new ObservableField<>("test");
-        this.password = new ObservableField<>("test");
     }
 
     // ------------------------>
@@ -34,36 +34,50 @@ public class LoginViewModel extends BaseObservable implements LoginEventHandler.
         this.user = user;
     }
 
-    public ObservableField<String> getUsername() {
-        return username;
-    }
-
-    public void setUsername(ObservableField<String> username) {
-        this.username = username;
-    }
-
-    public ObservableField<String> getPassword() {
-        return password;
-    }
-
-    public void setPassword(ObservableField<String> password) {
-        this.password = password;
+    // ------------------------>
+    @BindingAdapter({"app:binding"})
+    public static void bindEditText(EditText view, final BindableString bindableString) {
+        if(view.getTag() == null) {
+            view.setTag(true);
+            view.addTextChangedListener(new TextWatcherAdapter() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    bindableString.set(s.toString());
+                }
+            });
+        }
+        String newValue = bindableString.get();
+        if(!view.getText().toString().equals(newValue)) {
+            view.setText(newValue);
+        }
     }
 
     // ------------------------>
 
-    @Override
-    public void navigate() {
-        getUser().setUsername("abdalla");
-        getUser().setPassword("123456");
-        getUsername().set("abdalla");
-        getPassword().set("123456");
+    public void onLoginClicked(View view) {
+        getUser().setUsername(new BindableString("abdalla"));
+        getUser().setPassword(new BindableString("123456"));
     }
 
-    @Override
-    public void print() {
+    public void onPrintClicked(View view) {
         Log.e("DEBUG", getUser().toString());
-        Log.e("DEBUG", "Username : " + getUsername().get() + " Password : " + getPassword().get());
     }
 
+
+    private static class TextWatcherAdapter implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    }
 }
