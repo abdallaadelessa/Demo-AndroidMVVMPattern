@@ -10,14 +10,22 @@ import com.demo.abdallaadelessa.mvvmpatternandroiddemo.model.beans.BindableStrin
 import com.demo.abdallaadelessa.mvvmpatternandroiddemo.model.beans.User;
 import com.demo.abdallaadelessa.mvvmpatternandroiddemo.ui.viewmodel.LoginViewModel;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
+
+    private LoginViewModel loginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityLoginBinding loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         User user = new User(new BindableString("test"), new BindableString("test"));
-        LoginViewModel loginViewModel = new LoginViewModel(this, user);
+        loginViewModel = new LoginViewModel(this, user);
         loginBinding.setViewModel(loginViewModel);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        loginViewModel.onStop();
     }
 }
