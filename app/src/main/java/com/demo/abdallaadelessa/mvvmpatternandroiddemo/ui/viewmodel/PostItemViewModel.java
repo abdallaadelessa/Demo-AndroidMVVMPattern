@@ -1,14 +1,13 @@
 package com.demo.abdallaadelessa.mvvmpatternandroiddemo.ui.viewmodel;
 
 import android.content.Context;
-import android.databinding.BaseObservable;
 
 import com.demo.abdallaadelessa.mvvmpatternandroiddemo.model.beans.Post;
 
 /**
  * Created by abdallah on 29/10/15.
  */
-public class PostItemViewModel extends BaseObservable {
+public class PostItemViewModel {
     private Context context;
     private Post post;
 

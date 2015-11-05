@@ -1,7 +1,6 @@
 package com.demo.abdallaadelessa.mvvmpatternandroiddemo.ui.viewmodel;
 
 import android.content.Context;
-import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.view.View;
@@ -15,7 +14,7 @@ import java.util.List;
 /**
  * Created by abdallah on 29/10/15.
  */
-public class MainViewModel extends BaseObservable {
+public class MainViewModel {
     // Title
     public ObservableField<String> title;
     // Progress
